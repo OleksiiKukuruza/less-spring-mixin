@@ -1,0 +1,57 @@
+.less-spring-mixin(@name; @mixinWrapper; @inputTension; @inputFriction; @from; @to; @step: 5) {
+  @solver_timestamp_sec: 0.01;
+  @tension: (@inputTension - 30.0) * 3.62 + 194.0;
+  @friction: (@inputFriction - 8.0) * 3.0 + 25.0;
+
+  .rk4(0; @from);
+  .rk4(@velocity; @position; @values: @position; @count: 0) when (abs(@velocity) >= 0.001), (abs(@to - @position) > 0.001) {
+    @aPosition: @position;
+    @aVelocity: @velocity;
+    @aAcceleration: (@tension * (@to - @aPosition)) - @friction * @aVelocity;
+
+    @bPosition: @position + @aVelocity * @solver_timestamp_sec * 0.5;
+    @bVelocity: @velocity + @aAcceleration * @solver_timestamp_sec * 0.5;
+    @bAcceleration: (@tension * (@to - @bPosition)) - @friction * @bVelocity;
+
+    @cPosition: @position + @bVelocity * @solver_timestamp_sec * 0.5;
+    @cVelocity: @velocity + @bAcceleration * @solver_timestamp_sec * 0.5;
+    @cAcceleration: (@tension * (@to - @cPosition)) - @friction * @cVelocity;
+
+    @dPosition: @position + @cVelocity * @solver_timestamp_sec * 0.5;
+    @dVelocity: @velocity + @cAcceleration * @solver_timestamp_sec * 0.5;
+    @dAcceleration: (@tension * (@to - @dPosition)) - @friction * @dVelocity;
+
+    @dxdt: 1 / 6 * (@aVelocity + 2 * (@bVelocity + @cVelocity) + @dVelocity);
+    @dvdt: 1.0 / 6.0 * (@aAcceleration + 2.0 * (@bAcceleration + @cAcceleration) + @dAcceleration);
+
+    @newPosition: @position + @dxdt * @solver_timestamp_sec;
+    .rk4(@velocity + @dvdt * @solver_timestamp_sec; @newPosition; @values, @newPosition; @count + 1);
+  }
+  .rk4(@v; @p; @list; @length) when (abs(@v) < 0.001) and (abs(@to - @p) <= 0.001) {
+    @resValues: @list;
+    @resLength: @length;
+  }
+
+  @skip: @step * (@resLength - 1) / 100;
+  @keyframes @name {
+    .percents();
+    .percents(@i: 1; @percent: 0) when (@percent <= 100) {
+      @formattedPercent: ~'@{percent}%';
+
+      @{formattedPercent} {
+        .extractTimes(@resLength + 1 - round(@i); @resValues);
+        @mixinWrapper();
+        .springPropertiesMixin(@propValue);
+      }
+      .percents(@i + @skip; @percent + @step);
+    }
+  }
+  animation: @name @resLength * @solver_timestamp_sec * 1s;
+
+  .extractTimes(@times; @nestedList) when (@times > 1){
+    .extractTimes(@times - 1; extract(@nestedList, 1));
+  }
+  .extractTimes(@t; @l) when (@t = 1) {
+    @propValue: extract(@l, 2);
+  }
+}

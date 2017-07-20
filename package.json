@@ -1,0 +1,9 @@
+{
+  "name": "less-spring-mixin",
+  "version": "1.0.0",
+  "description": "less-spring-mixin for emulating spring physics animation",
+  "main": "index.less",
+  "keywords": ["spring", "less", "mixin", "animation", "keyframes"],
+  "author": "Oleksii Kukuruza",
+  "license": "MIT"
+}
