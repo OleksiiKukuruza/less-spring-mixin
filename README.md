@@ -17,7 +17,7 @@ less-spring-mixin for emulating spring physics animation
     transform: translateY(~'@{value}px');
   }}
   .less-spring-mixin(@name; {.private;}; 350; 10; 500; 100; 10);
-  animation: @name @animationDuration * 1s linear;
+  animation: @name @animationDuration linear;
 }
 ```
 
