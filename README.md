@@ -6,12 +6,14 @@ less-spring-mixin for emulating spring physics animation
 
 ```less
 .animated-div {
-  // You must create your inner mixin with .springPropertiesMixin name which
-  // will accept interpolated value (like callback function)
+  // You must create your inner mixin
+  // with .springPropertiesMixin name
+  // which will accept interpolated
+  // value (like callback function)
   .private {.springPropertiesMixin(@value) {
     transform: translateY(~'@{value}px');
   }}
-  .less-spring-mixin(mySpringAnimation; {.private;}; 350; 10; 500; 100; 10);
+  .less-spring-mixin(spring; {.private;}; 350; 10; 500; 100; 10);
 }
 ```
 
@@ -31,9 +33,9 @@ Step: 10 (optional, default value 5)
 
 ```css
 .animated-div {
-  animation: mySpringAnimation 0.92s;
+  animation: spring 0.92s linear;
 }
-@keyframes mySpringAnimation {
+@keyframes spring {
   0% {
     transform: translateY(479.60033078px);
   }
@@ -68,6 +70,7 @@ Step: 10 (optional, default value 5)
     transform: translateY(100.00059225225972px);
   }
 }
+
 ```
 
 ### License
