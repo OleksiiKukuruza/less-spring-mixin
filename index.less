@@ -46,7 +46,6 @@
       .percents(@i + @skip; @percent + @step);
     }
   }
-  animation: @name @resLength * @solver_timestamp_sec * 1s linear;
 
   .extractTimes(@times; @nestedList) when (@times > 1){
     .extractTimes(@times - 1; extract(@nestedList, 1));
@@ -54,4 +53,6 @@
   .extractTimes(@t; @l) when (@t = 1) {
     @propValue: extract(@l, 2);
   }
+
+  @animationDuration: @resLength * @solver_timestamp_sec;
 }

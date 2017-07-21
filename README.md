@@ -10,10 +10,14 @@ less-spring-mixin for emulating spring physics animation
   // with .springPropertiesMixin name
   // which will accept interpolated
   // value (like callback function)
+  // mixin creates variable @animationDuration
+  // which you should apply to animation
+  @name: spring;
   .private {.springPropertiesMixin(@value) {
     transform: translateY(~'@{value}px');
   }}
-  .less-spring-mixin(spring; {.private;}; 350; 10; 500; 100; 10);
+  .less-spring-mixin(@name; {.private;}; 350; 10; 500; 100; 10);
+  animation: @name @animationDuration * 1s linear;
 }
 ```
 
@@ -70,7 +74,6 @@ Step: 10 (optional, default value 5)
     transform: translateY(100.00059225225972px);
   }
 }
-
 ```
 
 ### License
