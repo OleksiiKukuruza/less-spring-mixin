@@ -1,7 +1,5 @@
-.less-spring-mixin(@name; @mixinWrapper; @inputTension; @inputFriction; @from; @to; @step: 5) {
+.less-spring-mixin(@name; @mixinWrapper; @tension; @friction; @from; @to; @step: 5) {
   @solver_timestamp_sec: 0.01;
-  @tension: (@inputTension - 30.0) * 3.62 + 194.0;
-  @friction: (@inputFriction - 8.0) * 3.0 + 25.0;
 
   .rk4(0; @from);
   .rk4(@velocity; @position; @values: @position; @count: 0) when (abs(@velocity) >= 0.001), (abs(@to - @position) > 0.001) {
