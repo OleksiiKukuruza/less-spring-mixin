@@ -1,6 +1,6 @@
 {
   "name": "less-spring-mixin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "less-spring-mixin for emulating spring physics animation",
   "main": "index.less",
   "keywords": [
